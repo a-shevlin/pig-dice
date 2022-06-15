@@ -9,7 +9,34 @@
 </head>
 <body>
   <div class="container">
-
+    <div id="header">
+      <div class="jumbotron">
+        <h1>Pig Dice</h1>
+      </div>
+    </div>
+    <div id="main-content" class="row">
+      <div id="player1" class="col-sm-6">
+        <div>
+          <h4 id="name1"></h4>
+        </div>
+        <btn id="roll1" class="btn btn-light">Roll</btn>
+        <btn id="hold1" class="btn btn-dark">Hold</btn>
+        <p>total: <span id="totalPoints1"></span></p>
+        <p>rolls: <span id="currentTotal1"></span></p>
+      </div>
+      <div id="player2" class="col-sm-6">
+        <div>
+          <h4 id="name2"></h4>
+        </div>
+        <btn id="roll2" class="btn btn-light">Roll</btn>
+        <btn id="hold2" class="btn btn-dark">Hold</btn>
+        <p>total: <span id="totalPoints2"></span></p>
+        <p>rolls: <span id="currentTotal2"></span></p>
+      </div>
+      <div>
+        <h4 id="currentRound">Round Number # <span id="currentRoundNumber"></span></h4>
+      </div>  
+    </div>
   </div>
 </body>
 </html>

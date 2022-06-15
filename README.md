@@ -47,8 +47,8 @@ Expected Output: { activePlayer: 'Claire' }
 
 Description for Game.prototype.roll
 
-Test1: 
-Code: 
+Test1: "Roll a number for playerObj"
+Code: roll(playerObj)
 Expected Output: 
 
 Description for 
