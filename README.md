@@ -1,17 +1,85 @@
-# _{Application Name}_
+## Test 
 
-#### By _**{List of contributors}**_
+```
+Description for Die()
 
-#### _{Brief description of application}_
+Test1: "Create a die with x sides"
+Code: new Die(x)
+Expected Output: { numberOfSides: x };
+
+Description for Die.prototype.roll
+
+Test1: "Get a random number from the die object"
+Code: die.roll()
+Expected Output: a number between 1 and 6
+
+Description for Player()
+
+Test1: "Create a player object with name and starting score"
+Code: new Player('Claire', 0);
+Expected Output: { name: 'Claire', currentTotal: [], totalPoints: 0 }
+
+Description for Player.prototype.eachRoll
+
+Test1: "Add current roll to currentTotal and return array of current rolls"
+Code: sumOfEachRoll()
+Expected Output: [number]
+
+Test2: "If rolled number is 1 then return empty array"
+Code: sumOfEachRoll()
+Expected Output: []
+
+Description for Player.prototype.sumOfCurrentTurn
+
+Test1: "Add currentTotal array into totalPoints and empty the currentTotal"
+Code: sumOfCurrentTurn()
+Expected Output: Player Object {
+  name: 'Claire', 
+  currentTotal: [], 
+  totalPoints: (x + y + z) 
+}
+
+Description for Game()
+
+Test1: "Create game object that keeps track of active player"
+Code: new Game('Claire')
+Expected Output: { activePlayer: 'Claire' }
+
+Description for Game.prototype.roll
+
+Test1: 
+Code: 
+Expected Output: 
+
+Description for 
+
+Test1: 
+Code: 
+Expected Output: 
+
+Description for 
+
+Test1: 
+Code: 
+Expected Output: 
+
+```
+
+
+# Pig Dice
+
+#### By Alex Shevlin, Claire Thorington, Seung Lee
+
+#### A website where you can play a pig dice game with another person
 
 ## Technologies Used
 
-* _List all_
-* _the major technologies_
-* _you used in your project_
-* _here_
+* HTML
+* CSS
+* JavaScript
+* jQuery
 
-## [GitHub Pages Link](https://leark.github.io/)
+## [GitHub Pages Link](https://leark.github.io/pig-dice)
 
 ## Description
 
