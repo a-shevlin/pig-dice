@@ -1,5 +1,6 @@
 body {
-  background: rgba(4, 85, 4, 0.801);
+  background-color: rgba(4, 85, 4, 0.801);
+  background-image: url(../img/felt.png);
   color: rgb(233, 255, 238);
 }
 
@@ -71,6 +72,30 @@ h2 {
   display: none;
   align-items: center;
   border-bottom: dashed rgb(233, 255, 238);
+}
+
+.dice1 {
+  background-image: url(../img/dice1.png);
+}
+
+.dice2 {
+  background-image: url(../img/dice2.png);
+}
+
+.dice3 {
+  background-image: url(../img/dice3.png);
+}
+
+.dice4 {
+  background-image: url(../img/dice4.png);
+}
+
+.dice5 {
+  background-image: url(../img/dice5.png);
+}
+
+.dice6 {
+  background-image: url(../img/dice6.png);
 }
 
 #player1 {

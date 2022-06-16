@@ -11,7 +11,7 @@ Die.prototype.roll = function () {
 
 function Player(name, total) {
   this.name = name;
-  this.currentTotal = [];
+  this.currentTotal = [0];
   this.totalPoints = total;
 }
 // Add rolls from current turn to total
@@ -19,7 +19,7 @@ Player.prototype.sumOfCurrentTurn = function () {
   for (let i = 0; i < this.currentTotal.length; i++) {
     this.totalPoints += this.currentTotal[i];
   }
-  return (this.currentTotal = []);
+  return this.clearCurrentTotal();
 };
 
 Player.prototype.eachRoll = function () {
@@ -30,9 +30,13 @@ Player.prototype.eachRoll = function () {
     this.currentTotal.push(number);
   } else {
     console.log("Oh no you rolled 1 :(");
-    return (this.currentTotal = []);
+    this.clearCurrentTotal();
   }
 };
+
+Player.prototype.clearCurrentTotal = function() {
+  this.currentTotal = [];
+}
 
 function Game(turnNumber, maxTurnNumber) {
   this.turnNumber = turnNumber;
@@ -119,14 +123,19 @@ const die = new Die(numberOfSides);
 
 // User Interface Logic
 
-function showImage(src, width, height, alt) {
-  let img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  img.height = height;
-  img.alt = alt;
+// function showImage(src, width, height, alt) {
+//   let img = document.createElement("img");
+//   img.src = src;
+//   img.width = width;
+//   img.height = height;
+//   img.alt = alt;
 
-  document.dice.appendChild(img);
+//   document.body.appendChild(img);
+// }
+
+function addClass() {
+  let element = document.getElementById('dice');
+  element.classList.add('dice1');
 }
 
 $(document).ready(function () {
@@ -147,11 +156,13 @@ $(document).ready(function () {
 
     $('#name1').text(player1.name);
     $('#name2').text(player2.name);
+    $('#totalPoints1').text(player1.totalPoints);
+    $('#totalPoints2').text(player2.totalPoints);
+    $('#currentTotal1').text(player1.currentTotal);
+    $('#currentTotal2').text(player2.currentTotal);
 
     // grab starting points from each player
-    // add the numbers to each totalPoints span
-
-    console.log(player1.totalPoints);
+    // add the numbers to span tags totalPoints1 and totalPoints2 span
 
     updateRoundNumber(gameOne);
     updateCurrentPlayer(gameOne);
@@ -163,47 +174,80 @@ $(document).ready(function () {
     if ($('#main-content').is(':visible')) {
       $('#game-setup').slideUp();
     }
-  });
+  
 
-  // when player1 clicks roll
-  $('#roll1').click(function (event) {
-    event.preventDefault();
-    gameOne.roll(player1);
-    $('#currentTotal1').text(player1.currentTotal);
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
+    // when player1 clicks roll
+    $('#roll1').click(function (event) {
+      event.preventDefault();
+      if (player1.currentTotal[0] === 0) {
+        player1.clearCurrentTotal();
+      }
+      gameOne.roll(player1);
+      const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+      let dice = document.getElementById('dice');
 
-  // when player2 clicks roll
-  $('#roll2').click(function (event) {
-    event.preventDefault();
-    gameOne.roll(player2);
-    $('#currentTotal2').text(player2.currentTotal);
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
+      switch (currentRoll) {
+        case (1):
+          dice.classList.add('dice1');
+          break;
+        case (2):
+          dice.classList.add('dice2');
+          break;
+        case (3):
+          dice.classList.add('dice3');
+          break;
+        case (4):
+          dice.classList.add('dice4');
+          break;
+        case (5):
+          dice.classList.add('dice5');
+          break;
+        case (6):
+          dice.classList.add('dice6');
+          break;
+        default:
+          console.log('You rolled a number that\'s not between 1 and 6');
+      }
+      
+      $('#currentTotal1').text(player1.currentTotal);
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
 
-  // when player1 clicks hold
-  $('#hold1').click(function (event) {
-    event.preventDefault();
-    gameOne.hold(player1, player2);
-    $('#totalPoints1').text(player1.totalPoints);
-    $('#currentTotal1').text('');
-    $('#roll1').prop('disabled', true);
-    $('#roll2').removeAttr('disabled');
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
-  // when player2 clicks hold
-  $('#hold2').click(function (event) {
-    event.preventDefault();
-    gameOne.hold(player2, player1);
-    $('#totalPoints2').text(player2.totalPoints);
-    $('#currentTotal2').text('');
-    $('#roll2').prop('disabled', true);
-    $('#roll1').removeAttr('disabled');
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
+    // when player2 clicks roll
+    $('#roll2').click(function (event) {
+      event.preventDefault();
+      if (player2.currentTotal[0] === 0) {
+        player2.clearCurrentTotal();
+      }
+      gameOne.roll(player2);
+      $('#currentTotal2').text(player2.currentTotal);
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
+
+    // when player1 clicks hold
+    $('#hold1').click(function (event) {
+      event.preventDefault();
+      gameOne.hold(player1, player2);
+      $('#totalPoints1').text(player1.totalPoints);
+      $('#currentTotal1').text('');
+      $('#roll1').prop('disabled', true);
+      $('#roll2').removeAttr('disabled');
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
+    // when player2 clicks hold
+    $('#hold2').click(function (event) {
+      event.preventDefault();
+      gameOne.hold(player2, player1);
+      $('#totalPoints2').text(player2.totalPoints);
+      $('#currentTotal2').text('');
+      $('#roll2').prop('disabled', true);
+      $('#roll1').removeAttr('disabled');
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
   });
 });
 
