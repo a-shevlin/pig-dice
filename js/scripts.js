@@ -119,6 +119,16 @@ const die = new Die(numberOfSides);
 
 // User Interface Logic
 
+function showImage(src, width, height, alt) {
+  let img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  img.height = height;
+  img.alt = alt;
+
+  document.dice.appendChild(img);
+}
+
 $(document).ready(function () {
   $("form#enterName").submit(function(event) {
     event.preventDefault();
@@ -137,12 +147,22 @@ $(document).ready(function () {
 
     $('#name1').text(player1.name);
     $('#name2').text(player2.name);
+
+    // grab starting points from each player
+    // add the numbers to each totalPoints span
+
+    console.log(player1.totalPoints);
+
     updateRoundNumber(gameOne);
     updateCurrentPlayer(gameOne);
 
-    
+    if (!$('#main-content').is(':visible')) {
+      $('#main-content').slideDown();
+    }
 
-
+    if ($('#main-content').is(':visible')) {
+      $('#game-setup').slideUp();
+    }
   });
 
   // when player1 clicks roll

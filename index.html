@@ -15,7 +15,7 @@
         <h1>Pig Dice</h1>
       </div>
     </div>
-    <div id="gameSetup">
+    <div id="game-setup">
       <form id="enterName">
         <div class="row">
           <div id="player1-name-div" class="form-group col-sm-6">
@@ -36,8 +36,12 @@
       </form>
     </div>
     <div>
-    <div id="main-content" class="row">
-      <div id="player1" class="col-sm-5">
+    <div id="main-content" class="d-flex justify-content-center">
+      <div class="col-sm-2">
+        <div class="dice">
+        </div>  
+      </div>
+      <div id="player1" class="col-sm-6">
         <div>
           <h4 id="name1"></h4>
         </div>
@@ -46,10 +50,7 @@
         <p>total: <span id="totalPoints1"></span></p>
         <p>rolls: <span id="currentTotal1"></span></p>
       </div>
-      <div class="col-sm-2">
-        <!-- Put dice animation here -->
-      </div>
-      <div id="player2" class="col-sm-5">
+      <div id="player2" class="col-sm-6">
         <div>
           <h4 id="name2"></h4>
         </div>
@@ -58,12 +59,13 @@
         <p>total: <span id="totalPoints2"></span></p>
         <p>rolls: <span id="currentTotal2"></span></p>
       </div>
-      <div class="row">
-        <h4 id="currentRound">Round Number # <span id="currentRoundNumber"></span></h4>
-      </div>
-      <div class="row">
-        <h4 id="currentPlayerName">Current Player: <span id="currentPlayer"></span></h4>
-      </div>
+    </div>
+    <div class="row">
+      <h4 id="currentRoundHeader">Round Number # <span id="currentRoundNumber"></span></h4>
+    </div>
+    <div class="row">
+      <h4 id="currentPlayerHeader">Current Player: <span id="currentPlayer"></span></h4>
+    </div>
     </div>
   </div>
 </body>

@@ -26,7 +26,18 @@ h2 {
 }
 
 .name-input {
-  
+  background-color: rgb(233, 255, 238);
+  border: inset 3px rgba(4, 85, 4, 0.801);
+  color: rgba(4, 85, 4, 0.801);
+}
+
+.name-input::placeholder {
+  color: rgba(4, 85, 4, 0.801);
+}
+
+.name-input:focus {
+  border: 3px rgba(27, 156, 27, 0.801);
+  box-shadow: none;
 }
 
 .name-button {
@@ -42,7 +53,7 @@ h2 {
   box-shadow: 0 5px rgb(105, 134, 110);
   font-family: 'Press Start 2P', cursive;
   font-size: 15px;
-  color: white;
+  color: rgb(233, 255, 238);
 }
 
 .player:hover {
@@ -57,8 +68,9 @@ h2 {
 }
 
 #main-content {
-  align-items: center;
   display: none;
+  align-items: center;
+  border-bottom: dashed rgb(233, 255, 238);
 }
 
 #player1 {
@@ -112,7 +124,7 @@ h2 {
   margin: 5px;
   background: rgba(28, 49, 28, 0.801);
   font-family: 'Press Start 2P', cursive;
-  border: inset 5px rgb(23, 56, 23);
+  border: inset 5px rgb(41, 92, 41);
   box-shadow: 0 3px rgb(105, 134, 110);
 }
 
@@ -142,7 +154,7 @@ h2 {
   color: yellow;
 }
 
-#currentRound {
+#currentRoundHeader {
   font-family: 'Press Start 2P', cursive;
   letter-spacing: 6px;
   font-size: 40px;
@@ -156,7 +168,7 @@ h2 {
   color: yellow;
 }
 
-#currentPlayerName {
+#currentPlayerHeader {
   font-family: 'Press Start 2P', cursive;
   letter-spacing: 6px;
   font-size: 40px;
