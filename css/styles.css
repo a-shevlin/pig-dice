@@ -74,30 +74,6 @@ h2 {
   border-bottom: dashed rgb(233, 255, 238);
 }
 
-.dice1 {
-  background-image: url(../img/dice1.png);
-}
-
-.dice2 {
-  background-image: url(../img/dice2.png);
-}
-
-.dice3 {
-  background-image: url(../img/dice3.png);
-}
-
-.dice4 {
-  background-image: url(../img/dice4.png);
-}
-
-.dice5 {
-  background-image: url(../img/dice5.png);
-}
-
-.dice6 {
-  background-image: url(../img/dice6.png);
-}
-
 #player1 {
   text-align: center;
 }
@@ -151,6 +127,7 @@ h2 {
   font-family: 'Press Start 2P', cursive;
   border: inset 5px rgb(41, 92, 41);
   box-shadow: 0 3px rgb(105, 134, 110);
+  color: rgb(233, 255, 238);
 }
 
 .hold:hover {

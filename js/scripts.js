@@ -81,6 +81,7 @@ Game.prototype.roll = function (rollingPlayer) {
             allPlayers[playerIndex],
             allPlayers[nextPlayerIndex]
           );
+          return true;
         } else {
           // round is over and we set the next player to first player in allPlayers
           currentGame.hold(allPlayers[playerIndex], allPlayers[0]);
@@ -123,19 +124,23 @@ const die = new Die(numberOfSides);
 
 // User Interface Logic
 
-// function showImage(src, width, height, alt) {
-//   let img = document.createElement("img");
-//   img.src = src;
-//   img.width = width;
-//   img.height = height;
-//   img.alt = alt;
+function showImage(src, width, height, alt) {
+  let img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  img.height = height;
+  img.alt = alt;
 
-//   document.body.appendChild(img);
-// }
+  let dice = document.getElementById('dice');
+  //$('#dice');
+  dice.appendChild(img);
+}
 
-function addClass() {
-  let element = document.getElementById('dice');
-  element.classList.add('dice1');
+function removeImage() {
+  let dice = document.getElementById('dice');
+  while (dice.firstChild) {
+    dice.removeChild(dice.firstChild);
+  }
 }
 
 $(document).ready(function () {
@@ -175,40 +180,16 @@ $(document).ready(function () {
       $('#game-setup').slideUp();
     }
   
-
     // when player1 clicks roll
     $('#roll1').click(function (event) {
       event.preventDefault();
       if (player1.currentTotal[0] === 0) {
         player1.clearCurrentTotal();
       }
-      gameOne.roll(player1);
+      const isOne = gameOne.roll(player1);
+      // get the most recent roll
       const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
-      let dice = document.getElementById('dice');
-
-      switch (currentRoll) {
-        case (1):
-          dice.classList.add('dice1');
-          break;
-        case (2):
-          dice.classList.add('dice2');
-          break;
-        case (3):
-          dice.classList.add('dice3');
-          break;
-        case (4):
-          dice.classList.add('dice4');
-          break;
-        case (5):
-          dice.classList.add('dice5');
-          break;
-        case (6):
-          dice.classList.add('dice6');
-          break;
-        default:
-          console.log('You rolled a number that\'s not between 1 and 6');
-      }
-      
+      showDice(currentRoll);
       $('#currentTotal1').text(player1.currentTotal);
       updateRoundNumber(gameOne);
       updateCurrentPlayer(gameOne);
@@ -221,6 +202,9 @@ $(document).ready(function () {
         player2.clearCurrentTotal();
       }
       gameOne.roll(player2);
+      // get the most recent roll
+      const currentRoll = player2.currentTotal[player2.currentTotal.length - 1];
+      showDice(currentRoll);
       $('#currentTotal2').text(player2.currentTotal);
       updateRoundNumber(gameOne);
       updateCurrentPlayer(gameOne);
@@ -230,6 +214,8 @@ $(document).ready(function () {
     $('#hold1').click(function (event) {
       event.preventDefault();
       gameOne.hold(player1, player2);
+      const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+      removeImage();      
       $('#totalPoints1').text(player1.totalPoints);
       $('#currentTotal1').text('');
       $('#roll1').prop('disabled', true);
@@ -241,6 +227,7 @@ $(document).ready(function () {
     $('#hold2').click(function (event) {
       event.preventDefault();
       gameOne.hold(player2, player1);
+      removeImage();
       $('#totalPoints2').text(player2.totalPoints);
       $('#currentTotal2').text('');
       $('#roll2').prop('disabled', true);
@@ -250,6 +237,31 @@ $(document).ready(function () {
     });
   });
 });
+
+function showDice(currentRoll) {
+  switch (currentRoll) {
+    case (1):
+      showImage('img/dice1.png', 100, 100, 'roll1');
+      break;
+    case (2):
+      showImage ('img/dice2.png', 100, 100, 'roll2');
+      break;
+    case (3):
+      showImage('img/dice3.png', 100, 100, 'roll3');
+      break;
+    case (4):
+      showImage ('img/dice4.png', 100, 100, 'roll4');
+      break;
+    case (5):
+      showImage('img/dice5.png', 100, 100, 'roll5');
+      break;
+    case (6):
+      showImage ('img/dice6.png', 100, 100, 'roll6');
+      break;
+    default:
+      console.log('You rolled a number that\'s not between 1 and 6');
+  }
+}
 
 function updateRoundNumber(gameObj) {
   let roundNumber = Math.round(gameObj.turnNumber / 2);
