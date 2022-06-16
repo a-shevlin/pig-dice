@@ -8,9 +8,10 @@ function Die(numberOfSides) {
 Die.prototype.roll = function () {
   return Math.floor(Math.random() * this.numberOfSides + 1);
 };
+
 function Player(name, total) {
   this.name = name;
-  this.currentTotal = [];
+  this.currentTotal = [0];
   this.totalPoints = total;
 }
 // Add rolls from current turn to total
@@ -18,19 +19,24 @@ Player.prototype.sumOfCurrentTurn = function () {
   for (let i = 0; i < this.currentTotal.length; i++) {
     this.totalPoints += this.currentTotal[i];
   }
-  return (this.currentTotal = []);
+  return this.clearCurrentTotal();
 };
 
 Player.prototype.eachRoll = function () {
   let number = die.roll();
 
-  console.log(number);
+  console.log("You rolled: " + number);
   if (number !== 1) {
     this.currentTotal.push(number);
   } else {
-    return (this.currentTotal = []);
+    console.log("Oh no you rolled 1 :(");
+    this.clearCurrentTotal();
   }
 };
+
+Player.prototype.clearCurrentTotal = function() {
+  this.currentTotal = [];
+}
 
 function Game(turnNumber, maxTurnNumber) {
   this.turnNumber = turnNumber;
@@ -49,27 +55,33 @@ Game.prototype.getActivePlayer = function () {
   return this.allPlayers[playerIndex];
 };
 
+// attempts to roll for the rollingPlayer
 Game.prototype.roll = function (rollingPlayer) {
   const turnNumber = this.turnNumber;
   if (!this.endOfGame(turnNumber)) {
     const allPlayers = this.allPlayers;
     // currentGame is set to the object this method was called on
+    // this is to make the code more readable to humans
     const currentGame = this;
     const numberOfPlayers = this.allPlayers.length;
     const playerIndex = Math.abs((turnNumber % numberOfPlayers) - 1);
     let currentPlayer = this.allPlayers[playerIndex];
-    // compare currentPlayer's name with rollingPlayer's name
+    // compare currentPlayer's name with rollingPlayer's name to see if it's rollingPlayer's turn
     if (currentPlayer.name === rollingPlayer.name) {
+      // roll for currentPlayer
       currentPlayer.eachRoll();
       // check if currentPlayer just rolled 1
       if (currentPlayer.currentTotal.length === 0) {
+        // get the nextPlayer's index in our game
         let nextPlayerIndex = playerIndex + 1;
         // check if nextPlayer is not the last player in allPlayers
         if (nextPlayerIndex < allPlayers.length) {
+          // switch players
           currentGame.hold(
             allPlayers[playerIndex],
             allPlayers[nextPlayerIndex]
           );
+          return true;
         } else {
           // round is over and we set the next player to first player in allPlayers
           currentGame.hold(allPlayers[playerIndex], allPlayers[0]);
@@ -113,70 +125,191 @@ const die = new Die(numberOfSides);
 // User Interface Logic
 
 $(document).ready(function () {
-  let player1 = new Player('Claire', 0);
-  let player2 = new Player('Alex', 10);
-  // let player3 = new Player('Seung', 0);
-
-  // initializing game
-  const lastTurn = 10;
-  let gameOne = new Game(1, lastTurn);
-  gameOne.addPlayer(player1);
-  gameOne.addPlayer(player2);
-
-  $('#name1').text(player1.name);
-  $('#name2').text(player2.name);
-  updateRoundNumber(gameOne);
-  updateCurrentPlayer(gameOne);
-
-  // when player1 clicks roll
-  $('#roll1').click(function (event) {
+  $("form#enterName").submit(function(event) {
     event.preventDefault();
-    gameOne.roll(player1);
-    $('#currentTotal1').text(player1.currentTotal);
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
+    const name1 = $("#playerOneNameInput").val();
+    const name2 = $("#playerTwoNameInput").val();
 
-  // when player2 clicks roll
-  $('#roll2').click(function (event) {
-    event.preventDefault();
-    gameOne.roll(player2);
-    $('#currentTotal2').text(player2.currentTotal);
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
+    let player1 = new Player(name1, 0);
+    let player2 = new Player(name2, 0);
+    // let player3 = new Player('Seung', 0);
 
-  // when player1 clicks hold
-  $('#hold1').click(function (event) {
-    event.preventDefault();
-    gameOne.hold(player1, player2);
+    // initializing game
+    const lastTurn = 10;
+    let gameOne = new Game(1, lastTurn);
+    gameOne.addPlayer(player1);
+    gameOne.addPlayer(player2);
+
+    $('#name1').text(player1.name);
+    $('#name2').text(player2.name);
     $('#totalPoints1').text(player1.totalPoints);
-    $('#currentTotal1').text('');
-    $('#roll1').prop('disabled', true);
-    $('#roll2').removeAttr('disabled');
-    updateRoundNumber(gameOne);
-    updateCurrentPlayer(gameOne);
-  });
-  // when player2 clicks hold
-  $('#hold2').click(function (event) {
-    event.preventDefault();
-    gameOne.hold(player2, player1);
     $('#totalPoints2').text(player2.totalPoints);
-    $('#currentTotal2').text('');
-    $('#roll2').prop('disabled', true);
-    $('#roll1').removeAttr('disabled');
+    $('#currentTotal1').text(player1.currentTotal);
+    $('#currentTotal2').text(player2.currentTotal);
+
     updateRoundNumber(gameOne);
     updateCurrentPlayer(gameOne);
+
+    if (!$('#main-content').is(':visible')) {
+      $('#main-content').slideDown();
+    }
+
+    if ($('#main-content').is(':visible')) {
+      $('#game-setup').slideUp();
+    }
+  
+    // when player1 clicks roll
+    $('#roll1').click(function (event) {
+      event.preventDefault();
+      if (player1.currentTotal[0] === 0) {
+        player1.clearCurrentTotal();
+      }
+      // only allow rolling if player1 is the active player
+      if (gameOne.getActivePlayer().name === player1.name) {
+        const isOne = gameOne.roll(player1);
+
+        // check if this is the first roll
+        const firstRoll = player1.currentTotal.length === 1;
+        if (firstRoll) {
+          removeImage();
+        }
+
+        // get the most recent roll
+        const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+        
+        // check if player rolled 1
+        if (currentRoll === undefined) {
+          removeImage();
+          showImage('img/dice1.png', 100, 100, 'roll1');
+          $('#roll1').prop('disabled', true);
+          $('#roll2').removeAttr('disabled');
+        } else {
+          showDice(currentRoll);
+        }
+        $('#currentTotal1').text(player1.currentTotal);
+        updateRoundNumber(gameOne);
+        updateCurrentPlayer(gameOne);
+      }
+    });
+
+    // when player2 clicks roll
+    $('#roll2').click(function (event) {
+      event.preventDefault();
+      if (player2.currentTotal[0] === 0) {
+        player2.clearCurrentTotal();
+      }
+      // only allow rolling if player2 is the active player
+      if (gameOne.getActivePlayer().name === player2.name) {
+        gameOne.roll(player2);
+
+        // check if this is the first roll
+        const firstRoll = player2.currentTotal.length === 1;
+        if (firstRoll) {
+          removeImage();
+        }
+        
+        // get the most recent roll
+        const currentRoll = player2.currentTotal[player2.currentTotal.length - 1];
+
+        // check if player rolled 1
+        if (currentRoll === undefined) {
+          removeImage();
+          showImage('img/dice1.png', 100, 100, 'roll1');
+          $('#roll2').prop('disabled', true);
+          $('#roll1').removeAttr('disabled');
+        } else {
+          showDice(currentRoll);
+        }
+        $('#currentTotal2').text(player2.currentTotal);
+        updateRoundNumber(gameOne);
+        updateCurrentPlayer(gameOne);
+      }
+    });
+
+    // when player1 clicks hold
+    $('#hold1').click(function (event) {
+      event.preventDefault();
+      gameOne.hold(player1, player2);
+      const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+      removeImage();      
+      $('#totalPoints1').text(player1.totalPoints);
+      $('#currentTotal1').text('');
+      $('#roll1').prop('disabled', true);
+      $('#roll2').removeAttr('disabled');
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
+    // when player2 clicks hold
+    $('#hold2').click(function (event) {
+      event.preventDefault();
+      gameOne.hold(player2, player1);
+      removeImage();
+      $('#totalPoints2').text(player2.totalPoints);
+      $('#currentTotal2').text('');
+      $('#roll2').prop('disabled', true);
+      $('#roll1').removeAttr('disabled');
+      updateRoundNumber(gameOne);
+      updateCurrentPlayer(gameOne);
+    });
   });
 });
 
+// show dice image depending on what roll
+function showDice(currentRoll) {
+  switch (currentRoll) {
+    case (1):
+      showImage('img/dice1.png', 100, 100, 'roll1');
+      break;
+    case (2):
+      showImage ('img/dice2.png', 100, 100, 'roll2');
+      break;
+    case (3):
+      showImage('img/dice3.png', 100, 100, 'roll3');
+      break;
+    case (4):
+      showImage ('img/dice4.png', 100, 100, 'roll4');
+      break;
+    case (5):
+      showImage('img/dice5.png', 100, 100, 'roll5');
+      break;
+    case (6):
+      showImage ('img/dice6.png', 100, 100, 'roll6');
+      break;
+    default:
+      console.log('You rolled a number that\'s not between 1 and 6');
+  }
+}
+
+// update round #
 function updateRoundNumber(gameObj) {
   let roundNumber = Math.round(gameObj.turnNumber / 2);
   $('#currentRoundNumber').text(roundNumber);
 }
 
+// update current player
 function updateCurrentPlayer(gameObj) {
   $('#currentPlayer').text(gameObj.getActivePlayer().name);
+}
+
+// show image in the dice div
+function showImage(src, width, height, alt) {
+  let img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  img.height = height;
+  img.alt = alt;
+
+  let dice = document.getElementById('dice');
+  //$('#dice');
+  dice.appendChild(img);
+}
+
+// remove images in the dice div
+function removeImage() {
+  let dice = document.getElementById('dice');
+  while (dice.firstChild) {
+    dice.removeChild(dice.firstChild);
+  }
 }
 
 /*

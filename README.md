@@ -96,17 +96,17 @@ Expected Output:
 
 ## Description
 
-_{This is a detailed description of your application. Give as much detail as needed to explain what the application does as well as any other information you want users or other developers to have.}_
+This is a website that allows two players to play pig dice game. The website indicates whose turn it is and the round the game is in. On the player's turn, they can either roll or hold by clicking on the button on their side. If roll is clicked, the number rolled will be displayed unless the number is 1. The player can click roll as many times as they want until 1 is rolled or they click hold. If 1 is rolled then the player's turn will end and go to the next player's turn. If player clicks hold, it will add all the rolls thrown so far and add it to the total.
 
 ## Setup/Installation Requirements
 
-* _This is a great place_
-* _to list setup instructions_
-* _in a simple_
-* _easy-to-understand_
-* _format_
+1. Open Git Bash if on Windows and terminal if on Mac
+2. Run the command
 
-_{Leave nothing to chance! You want it to be easy for potential users, employers and collaborators to run your app. Do I need to run a server? How should I set up my databases? Is there other code this application depends on? We recommend deleting the project from your desktop, re-cloning the project from GitHub, and writing down all the steps necessary to get the project working again.}_
+    ``Git clone https://github.com/leark/pig-dice``
+
+3. Go inside pig-dice directory
+4. Open index.html
 
 ## Known Bugs
 
@@ -114,8 +114,6 @@ _{Leave nothing to chance! You want it to be easy for potential users, employers
 * _should go here_
 
 ## License
-
-_{Let people know what to do if they run into any issues or have questions, ideas or concerns.  Encourage them to contact you or make a contribution to the code.}_
 
 [GNU](/LICENSE-GNU)
 

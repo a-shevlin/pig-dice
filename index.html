@@ -15,31 +15,58 @@
         <h1>Pig Dice</h1>
       </div>
     </div>
-    <div id="main-content" class="row">
-      <div id="player1" class="col-sm-6">
-        <div>
-          <h4 id="name1"></h4>
+    <div id="game-setup">
+      <form id="enterName">
+        <div class="row">
+          <div id="player1-name-div" class="form-group col-sm-6">
+            <h2>Player 1 Name:</h2>
+            <input type="text" id="playerOneNameInput" class="form-control name-input" placeholder="Enter your name" required>
+          </div>
+          <div id="player2-name-div" class="form-group col-sm-6">
+            <h2>Player 2 Name:</h2>
+            <input type="text" id="playerTwoNameInput" class="form-control name-input" placeholder="Enter your name" required>
+          </div>
         </div>
-        <btn id="roll1" class="btn btn-light">Roll</btn>
-        <btn id="hold1" class="btn btn-dark">Hold</btn>
-        <p>total: <span id="totalPoints1"></span></p>
-        <p>rolls: <span id="currentTotal1"></span></p>
-      </div>
-      <div id="player2" class="col-sm-6">
-        <div>
-          <h4 id="name2"></h4>
+        <div class="name-button">
+          <div id="game-options col-sm-12 d-flex justify-content-center">
+            <button type="submit" class="btn player">Play Standard Version</button>
+            <!-- <button type="submit" class="btn player">Play 2-Dice Version</button> -->
+          </div>
         </div>
-        <btn id="roll2" class="btn btn-light">Roll</btn>
-        <btn id="hold2" class="btn btn-dark">Hold</btn>
-        <p>total: <span id="totalPoints2"></span></p>
-        <p>rolls: <span id="currentTotal2"></span></p>
+      </form>
+    </div>
+    <div>
+    <div id="main-content">
+      <div class="d-flex justify-content-center">
+        <div id="player1" class="col-sm-6">
+          <div>
+            <h4 id="name1"></h4>
+          </div>
+          <btn id="roll1" class="roll btn">Roll</btn>
+          <btn id="hold1" class="hold btn">Hold</btn>
+          <p>total: <span id="totalPoints1"></span></p>
+          <p>rolls: <span id="currentTotal1"></span></p>
+        </div>
+        <div class="col-sm-2">
+          <div class="d-flex justify-content-center" id="dice">
+          </div>  
+        </div>
+        <div id="player2" class="col-sm-6">
+          <div>
+            <h4 id="name2"></h4>
+          </div>
+          <btn id="roll2" class="roll btn">Roll</btn>
+          <btn id="hold2" class="hold btn">Hold</btn>
+          <p>total: <span id="totalPoints2"></span></p>
+          <p>rolls: <span id="currentTotal2"></span></p>
+        </div>
       </div>
-      <div class="row">
-        <h4 id="currentRound">Round Number # <span id="currentRoundNumber"></span></h4>
-      </div>
-      <div class="row">
-        <h4 id="currentPlayerName">Current Player: <span id="currentPlayer"></span></h4>
-      </div>
+    </div>
+    <div class="row">
+      <h4 id="currentRoundHeader">Round Number # <span id="currentRoundNumber"></span></h4>
+    </div>
+    <div class="row">
+      <h4 id="currentPlayerHeader">Current Player: <span id="currentPlayer"></span></h4>
     </div>
   </div>
 </body>
