@@ -8,6 +8,7 @@ function Die(numberOfSides) {
 Die.prototype.roll = function () {
   return Math.floor(Math.random() * this.numberOfSides + 1);
 };
+
 function Player(name, total) {
   this.name = name;
   this.currentTotal = [];
@@ -24,10 +25,11 @@ Player.prototype.sumOfCurrentTurn = function () {
 Player.prototype.eachRoll = function () {
   let number = die.roll();
 
-  console.log(number);
+  console.log("You rolled: " + number);
   if (number !== 1) {
     this.currentTotal.push(number);
   } else {
+    console.log("Oh no you rolled 1 :(");
     return (this.currentTotal = []);
   }
 };
@@ -49,23 +51,28 @@ Game.prototype.getActivePlayer = function () {
   return this.allPlayers[playerIndex];
 };
 
+// attempts to roll for the rollingPlayer
 Game.prototype.roll = function (rollingPlayer) {
   const turnNumber = this.turnNumber;
   if (!this.endOfGame(turnNumber)) {
     const allPlayers = this.allPlayers;
     // currentGame is set to the object this method was called on
+    // this is to make the code more readable to humans
     const currentGame = this;
     const numberOfPlayers = this.allPlayers.length;
     const playerIndex = Math.abs((turnNumber % numberOfPlayers) - 1);
     let currentPlayer = this.allPlayers[playerIndex];
-    // compare currentPlayer's name with rollingPlayer's name
+    // compare currentPlayer's name with rollingPlayer's name to see if it's rollingPlayer's turn
     if (currentPlayer.name === rollingPlayer.name) {
+      // roll for currentPlayer
       currentPlayer.eachRoll();
       // check if currentPlayer just rolled 1
       if (currentPlayer.currentTotal.length === 0) {
+        // get the nextPlayer's index in our game
         let nextPlayerIndex = playerIndex + 1;
         // check if nextPlayer is not the last player in allPlayers
         if (nextPlayerIndex < allPlayers.length) {
+          // switch players
           currentGame.hold(
             allPlayers[playerIndex],
             allPlayers[nextPlayerIndex]
@@ -113,20 +120,30 @@ const die = new Die(numberOfSides);
 // User Interface Logic
 
 $(document).ready(function () {
-  let player1 = new Player('Claire', 0);
-  let player2 = new Player('Alex', 10);
-  // let player3 = new Player('Seung', 0);
+  $("form#enterName").submit(function(event) {
+    event.preventDefault();
+    const name1 = $("#playerOneNameInput").val();
+    const name2 = $("#playerTwoNameInput").val();
 
-  // initializing game
-  const lastTurn = 10;
-  let gameOne = new Game(1, lastTurn);
-  gameOne.addPlayer(player1);
-  gameOne.addPlayer(player2);
+    let player1 = new Player(name1, 0);
+    let player2 = new Player(name2, 0);
+    // let player3 = new Player('Seung', 0);
 
-  $('#name1').text(player1.name);
-  $('#name2').text(player2.name);
-  updateRoundNumber(gameOne);
-  updateCurrentPlayer(gameOne);
+    // initializing game
+    const lastTurn = 10;
+    let gameOne = new Game(1, lastTurn);
+    gameOne.addPlayer(player1);
+    gameOne.addPlayer(player2);
+
+    $('#name1').text(player1.name);
+    $('#name2').text(player2.name);
+    updateRoundNumber(gameOne);
+    updateCurrentPlayer(gameOne);
+
+    
+
+
+  });
 
   // when player1 clicks roll
   $('#roll1').click(function (event) {

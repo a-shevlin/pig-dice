@@ -13,8 +13,52 @@ body {
   text-align: center;
 }
 
+h2 {
+  font-family: 'Fascinate', cursive;
+}
+
+#player1-name-div {
+  text-align: center;
+}
+
+#player2-name-div {
+  text-align: center;
+}
+
+.name-input {
+  
+}
+
+.name-button {
+  text-align: center;
+} 
+
+.player {
+  margin: 5px;
+  width: 350px;
+  margin: 15px;
+  background-color:rgba(27, 51, 27, 0.726);
+  border: inset 5px rgb(23, 56, 23);
+  box-shadow: 0 5px rgb(105, 134, 110);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 15px;
+  color: white;
+}
+
+.player:hover {
+  background: rgba(27, 51, 27, 0.726);
+  color: yellow;
+}
+
+.player:active {
+  background: rgba(27, 51, 27, 0.726);
+  box-shadow: 0 3px rgb(68, 88, 71);
+  transform: translateY(2px);
+}
+
 #main-content {
   align-items: center;
+  display: none;
 }
 
 #player1 {
@@ -45,17 +89,41 @@ body {
   border-bottom: dashed rgb(233, 255, 238);
 }
 
-#roll1 {
+.roll {
+  margin: 5px;
   background: rgba(4, 85, 4, 0.801);
   font-family: 'Press Start 2P', cursive;
   color: rgb(233, 255, 238);
   border: inset 5px rgba(39, 156, 64, 0.863);
+  box-shadow: 0 3px rgb(105, 134, 110);
 }
 
-#hold1 {
+.roll:hover {
+  background: rgba(27, 51, 27, 0.726);
+}
+
+.roll:active {
+  background: rgba(27, 51, 27, 0.726);
+  box-shadow: 0 1px rgb(68, 88, 71);
+  transform: translateY(2px);
+}
+
+.hold {
+  margin: 5px;
   background: rgba(28, 49, 28, 0.801);
   font-family: 'Press Start 2P', cursive;
   border: inset 5px rgb(23, 56, 23);
+  box-shadow: 0 3px rgb(105, 134, 110);
+}
+
+.hold:hover {
+  background: rgba(23, 37, 23, 0.801);
+}
+
+.hold:active {
+  background: rgba(28, 49, 28, 0.801);
+  box-shadow: 0 1px rgb(68, 88, 71);
+  transform: translateY(2px);
 }
 
 #totalPoints1 {
@@ -64,19 +132,6 @@ body {
 
 #currentTotal1 {
   color: yellow;
-}
-
-#roll2 {
-  background: rgba(4, 85, 4, 0.801);
-  font-family: 'Press Start 2P', cursive;
-  color: rgb(233, 255, 238);
-  border: inset 5px rgba(39, 156, 64, 0.863);
-}
-
-#hold2 {
-  background: rgba(28, 49, 28, 0.801);
-  font-family: 'Press Start 2P', cursive;
-  border: inset 5px rgb(23, 56, 23);
 }
 
 #totalPoints2 {
