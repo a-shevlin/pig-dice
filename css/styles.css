@@ -74,6 +74,11 @@ h2 {
   border-bottom: dashed rgb(233, 255, 238);
 }
 
+#dice {
+  width: 400;
+  object-fit: contain;
+}
+
 #player1 {
   text-align: center;
 }

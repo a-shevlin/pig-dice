@@ -186,13 +186,29 @@ $(document).ready(function () {
       if (player1.currentTotal[0] === 0) {
         player1.clearCurrentTotal();
       }
-      const isOne = gameOne.roll(player1);
-      // get the most recent roll
-      const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
-      showDice(currentRoll);
-      $('#currentTotal1').text(player1.currentTotal);
-      updateRoundNumber(gameOne);
-      updateCurrentPlayer(gameOne);
+      if (gameOne.getActivePlayer().name === player1.name) {
+        const isOne = gameOne.roll(player1);
+
+        // check if this is the first roll
+        const firstRoll = player1.currentTotal.length === 1;
+        if (firstRoll) {
+          removeImage();
+        }
+
+        // get the most recent roll
+        const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+        if (currentRoll === undefined) {
+          removeImage();
+          showImage('img/dice1.png', 100, 100, 'roll1');
+          $('#roll1').prop('disabled', true);
+          $('#roll2').removeAttr('disabled');
+        } else {
+          showDice(currentRoll);
+        }
+        $('#currentTotal1').text(player1.currentTotal);
+        updateRoundNumber(gameOne);
+        updateCurrentPlayer(gameOne);
+      }
     });
 
     // when player2 clicks roll
@@ -201,13 +217,29 @@ $(document).ready(function () {
       if (player2.currentTotal[0] === 0) {
         player2.clearCurrentTotal();
       }
-      gameOne.roll(player2);
-      // get the most recent roll
-      const currentRoll = player2.currentTotal[player2.currentTotal.length - 1];
-      showDice(currentRoll);
-      $('#currentTotal2').text(player2.currentTotal);
-      updateRoundNumber(gameOne);
-      updateCurrentPlayer(gameOne);
+      if (gameOne.getActivePlayer().name === player2.name) {
+        gameOne.roll(player2);
+
+        // check if this is the first roll
+        const firstRoll = player2.currentTotal.length === 1;
+        if (firstRoll) {
+          removeImage();
+        }
+        
+        // get the most recent roll
+        const currentRoll = player2.currentTotal[player2.currentTotal.length - 1];
+        if (currentRoll === undefined) {
+          removeImage();
+          showImage('img/dice1.png', 100, 100, 'roll1');
+          $('#roll2').prop('disabled', true);
+          $('#roll1').removeAttr('disabled');
+        } else {
+          showDice(currentRoll);
+        }
+        $('#currentTotal2').text(player2.currentTotal);
+        updateRoundNumber(gameOne);
+        updateCurrentPlayer(gameOne);
+      }
     });
 
     // when player1 clicks hold
