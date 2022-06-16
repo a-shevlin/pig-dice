@@ -124,25 +124,6 @@ const die = new Die(numberOfSides);
 
 // User Interface Logic
 
-function showImage(src, width, height, alt) {
-  let img = document.createElement("img");
-  img.src = src;
-  img.width = width;
-  img.height = height;
-  img.alt = alt;
-
-  let dice = document.getElementById('dice');
-  //$('#dice');
-  dice.appendChild(img);
-}
-
-function removeImage() {
-  let dice = document.getElementById('dice');
-  while (dice.firstChild) {
-    dice.removeChild(dice.firstChild);
-  }
-}
-
 $(document).ready(function () {
   $("form#enterName").submit(function(event) {
     event.preventDefault();
@@ -166,9 +147,6 @@ $(document).ready(function () {
     $('#currentTotal1').text(player1.currentTotal);
     $('#currentTotal2').text(player2.currentTotal);
 
-    // grab starting points from each player
-    // add the numbers to span tags totalPoints1 and totalPoints2 span
-
     updateRoundNumber(gameOne);
     updateCurrentPlayer(gameOne);
 
@@ -186,6 +164,7 @@ $(document).ready(function () {
       if (player1.currentTotal[0] === 0) {
         player1.clearCurrentTotal();
       }
+      // only allow rolling if player1 is the active player
       if (gameOne.getActivePlayer().name === player1.name) {
         const isOne = gameOne.roll(player1);
 
@@ -197,6 +176,8 @@ $(document).ready(function () {
 
         // get the most recent roll
         const currentRoll = player1.currentTotal[player1.currentTotal.length - 1];
+        
+        // check if player rolled 1
         if (currentRoll === undefined) {
           removeImage();
           showImage('img/dice1.png', 100, 100, 'roll1');
@@ -217,6 +198,7 @@ $(document).ready(function () {
       if (player2.currentTotal[0] === 0) {
         player2.clearCurrentTotal();
       }
+      // only allow rolling if player2 is the active player
       if (gameOne.getActivePlayer().name === player2.name) {
         gameOne.roll(player2);
 
@@ -228,6 +210,8 @@ $(document).ready(function () {
         
         // get the most recent roll
         const currentRoll = player2.currentTotal[player2.currentTotal.length - 1];
+
+        // check if player rolled 1
         if (currentRoll === undefined) {
           removeImage();
           showImage('img/dice1.png', 100, 100, 'roll1');
@@ -270,6 +254,7 @@ $(document).ready(function () {
   });
 });
 
+// show dice image depending on what roll
 function showDice(currentRoll) {
   switch (currentRoll) {
     case (1):
@@ -295,13 +280,36 @@ function showDice(currentRoll) {
   }
 }
 
+// update round #
 function updateRoundNumber(gameObj) {
   let roundNumber = Math.round(gameObj.turnNumber / 2);
   $('#currentRoundNumber').text(roundNumber);
 }
 
+// update current player
 function updateCurrentPlayer(gameObj) {
   $('#currentPlayer').text(gameObj.getActivePlayer().name);
+}
+
+// show image in the dice div
+function showImage(src, width, height, alt) {
+  let img = document.createElement("img");
+  img.src = src;
+  img.width = width;
+  img.height = height;
+  img.alt = alt;
+
+  let dice = document.getElementById('dice');
+  //$('#dice');
+  dice.appendChild(img);
+}
+
+// remove images in the dice div
+function removeImage() {
+  let dice = document.getElementById('dice');
+  while (dice.firstChild) {
+    dice.removeChild(dice.firstChild);
+  }
 }
 
 /*

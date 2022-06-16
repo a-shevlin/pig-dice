@@ -36,28 +36,30 @@
       </form>
     </div>
     <div>
-    <div id="main-content" class="d-flex justify-content-center">
-      <div id="player1" class="col-sm-6">
-        <div>
-          <h4 id="name1"></h4>
+    <div id="main-content">
+      <div class="d-flex justify-content-center">
+        <div id="player1" class="col-sm-6">
+          <div>
+            <h4 id="name1"></h4>
+          </div>
+          <btn id="roll1" class="roll btn">Roll</btn>
+          <btn id="hold1" class="hold btn">Hold</btn>
+          <p>total: <span id="totalPoints1"></span></p>
+          <p>rolls: <span id="currentTotal1"></span></p>
         </div>
-        <btn id="roll1" class="roll btn">Roll</btn>
-        <btn id="hold1" class="hold btn">Hold</btn>
-        <p>total: <span id="totalPoints1"></span></p>
-        <p>rolls: <span id="currentTotal1"></span></p>
-      </div>
-      <div class="col-sm-2">
-        <div class="d-flex justify-content-center" id="dice">
-        </div>  
-      </div>
-      <div id="player2" class="col-sm-6">
-        <div>
-          <h4 id="name2"></h4>
+        <div class="col-sm-2">
+          <div class="d-flex justify-content-center" id="dice">
+          </div>  
         </div>
-        <btn id="roll2" class="roll btn">Roll</btn>
-        <btn id="hold2" class="hold btn">Hold</btn>
-        <p>total: <span id="totalPoints2"></span></p>
-        <p>rolls: <span id="currentTotal2"></span></p>
+        <div id="player2" class="col-sm-6">
+          <div>
+            <h4 id="name2"></h4>
+          </div>
+          <btn id="roll2" class="roll btn">Roll</btn>
+          <btn id="hold2" class="hold btn">Hold</btn>
+          <p>total: <span id="totalPoints2"></span></p>
+          <p>rolls: <span id="currentTotal2"></span></p>
+        </div>
       </div>
     </div>
     <div class="row">
@@ -65,7 +67,6 @@
     </div>
     <div class="row">
       <h4 id="currentPlayerHeader">Current Player: <span id="currentPlayer"></span></h4>
-    </div>
     </div>
   </div>
 </body>
