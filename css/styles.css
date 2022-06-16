@@ -1,0 +1,115 @@
+body {
+  background: rgba(4, 85, 4, 0.801);
+  color: rgb(233, 255, 238);
+}
+
+.jumbotron {
+  background: rgba(4, 85, 4, 0);
+  font-family: 'Fascinate', cursive;
+}
+
+.jumbotron h1 {
+  font-size: 70px;
+  text-align: center;
+}
+
+#main-content {
+  align-items: center;
+}
+
+#player1 {
+  text-align: center;
+}
+
+#player1 h4 {
+  font-family: 'Fascinate', cursive;
+  letter-spacing: 8px;
+  border-bottom: dashed rgb(233, 255, 238);
+}
+
+#player1 p {
+  font-family: 'Press Start 2P', cursive;
+}
+
+#player2 {
+  text-align: center;
+}
+
+#player2 p {
+  font-family: 'Press Start 2P', cursive;
+}
+
+#player2 h4 {
+  font-family: 'Fascinate', cursive;
+  letter-spacing: 8px;
+  border-bottom: dashed rgb(233, 255, 238);
+}
+
+#roll1 {
+  background: rgba(4, 85, 4, 0.801);
+  font-family: 'Press Start 2P', cursive;
+  color: rgb(233, 255, 238);
+  border: inset 5px rgba(39, 156, 64, 0.863);
+}
+
+#hold1 {
+  background: rgba(28, 49, 28, 0.801);
+  font-family: 'Press Start 2P', cursive;
+  border: inset 5px rgb(23, 56, 23);
+}
+
+#totalPoints1 {
+  color: rgb(202, 182, 0);
+}
+
+#currentTotal1 {
+  color: yellow;
+}
+
+#roll2 {
+  background: rgba(4, 85, 4, 0.801);
+  font-family: 'Press Start 2P', cursive;
+  color: rgb(233, 255, 238);
+  border: inset 5px rgba(39, 156, 64, 0.863);
+}
+
+#hold2 {
+  background: rgba(28, 49, 28, 0.801);
+  font-family: 'Press Start 2P', cursive;
+  border: inset 5px rgb(23, 56, 23);
+}
+
+#totalPoints2 {
+  color: rgb(202, 182, 0);
+}
+
+#currentTotal2 {
+  color: yellow;
+}
+
+#currentRound {
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 6px;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 11.5vw;
+  margin-right: 40px;
+  text-align: center;
+}
+
+#currentRoundNumber {
+  color: yellow;
+}
+
+#currentPlayerName {
+  font-family: 'Press Start 2P', cursive;
+  letter-spacing: 6px;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-left: 4.5vw;
+  text-align: center;
+}
+
+#currentPlayer {
+  color: yellow;
+}

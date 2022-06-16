@@ -4,6 +4,7 @@ function Die(numberOfSides) {
   this.numberOfSides = numberOfSides;
 }
 
+// return a number from 1 to numberOfSides
 Die.prototype.roll = function () {
   return Math.floor(Math.random() * this.numberOfSides + 1);
 };
@@ -12,7 +13,7 @@ function Player(name, total) {
   this.currentTotal = [];
   this.totalPoints = total;
 }
-// Add score to total
+// Add rolls from current turn to total
 Player.prototype.sumOfCurrentTurn = function () {
   for (let i = 0; i < this.currentTotal.length; i++) {
     this.totalPoints += this.currentTotal[i];
@@ -37,35 +38,53 @@ function Game(turnNumber, maxTurnNumber) {
   this.allPlayers = [];
 }
 
-Game.prototype.roll = function (x) {
+// return player object of turn owner
+Game.prototype.getActivePlayer = function () {
+  const turnNumber = this.turnNumber;
+  const numberOfPlayers = this.allPlayers.length;
+
+  // calculate who's turn it is by looking at turn number and number of players
+  // we assume turn number starts at 1
+  const playerIndex = Math.abs((turnNumber % numberOfPlayers) - 1);
+  return this.allPlayers[playerIndex];
+};
+
+Game.prototype.roll = function (rollingPlayer) {
   const turnNumber = this.turnNumber;
   if (!this.endOfGame(turnNumber)) {
+    const allPlayers = this.allPlayers;
+    // currentGame is set to the object this method was called on
+    const currentGame = this;
     const numberOfPlayers = this.allPlayers.length;
     const playerIndex = Math.abs((turnNumber % numberOfPlayers) - 1);
-    const allPlayers = this.allPlayers;
-    const currentGame = this;
-    let currentPlayer = allPlayers[playerIndex];
-    if (currentPlayer.name === x.name) {
+    let currentPlayer = this.allPlayers[playerIndex];
+    // compare currentPlayer's name with rollingPlayer's name
+    if (currentPlayer.name === rollingPlayer.name) {
       currentPlayer.eachRoll();
+      // check if currentPlayer just rolled 1
       if (currentPlayer.currentTotal.length === 0) {
         let nextPlayerIndex = playerIndex + 1;
+        // check if nextPlayer is not the last player in allPlayers
         if (nextPlayerIndex < allPlayers.length) {
           currentGame.hold(
             allPlayers[playerIndex],
             allPlayers[nextPlayerIndex]
           );
         } else {
+          // round is over and we set the next player to first player in allPlayers
           currentGame.hold(allPlayers[playerIndex], allPlayers[0]);
         }
       }
     } else {
-      console.log("it's not " + x.name + "'s turn");
+      // if someone tries to roll outside their turn
+      console.log("it's not " + rollingPlayer.name + "'s turn");
     }
   } else {
     console.log('Reached the end of the game');
   }
 };
 
+// accepts 2 player objects and changes active player to the 2nd player obj as long as the game is not over
 Game.prototype.hold = function (currPlayer, nextPlayer) {
   if (!this.endOfGame(this.turnNumber)) {
     this.activePlayer = nextPlayer;
@@ -75,10 +94,12 @@ Game.prototype.hold = function (currPlayer, nextPlayer) {
   }
 };
 
+// add player to gameObj
 Game.prototype.addPlayer = function (player) {
   this.allPlayers.push(player);
 };
 
+// check if currentTurn is the last turn of current game
 Game.prototype.endOfGame = function (currentTurn) {
   if (currentTurn <= this.maxTurnNumber) {
     return false;
@@ -87,39 +108,45 @@ Game.prototype.endOfGame = function (currentTurn) {
 };
 
 const numberOfSides = 6;
-
 const die = new Die(numberOfSides);
-const die2 = new Die(numberOfSides);
 
 // User Interface Logic
 
 $(document).ready(function () {
   let player1 = new Player('Claire', 0);
   let player2 = new Player('Alex', 10);
-  let player3 = new Player('Seung', 0);
+  // let player3 = new Player('Seung', 0);
 
-  let gameOne = new Game(1, 10);
+  // initializing game
+  const lastTurn = 10;
+  let gameOne = new Game(1, lastTurn);
   gameOne.addPlayer(player1);
   gameOne.addPlayer(player2);
 
   $('#name1').text(player1.name);
   $('#name2').text(player2.name);
-  $('#currentRoundNumber').text(gameOne.turnNumber);
-  let numberOfTotalTurns = 10;
+  updateRoundNumber(gameOne);
+  updateCurrentPlayer(gameOne);
 
-  // when someone clicks roll
+  // when player1 clicks roll
   $('#roll1').click(function (event) {
     event.preventDefault();
     gameOne.roll(player1);
     $('#currentTotal1').text(player1.currentTotal);
+    updateRoundNumber(gameOne);
+    updateCurrentPlayer(gameOne);
   });
+
+  // when player2 clicks roll
   $('#roll2').click(function (event) {
     event.preventDefault();
     gameOne.roll(player2);
     $('#currentTotal2').text(player2.currentTotal);
+    updateRoundNumber(gameOne);
+    updateCurrentPlayer(gameOne);
   });
 
-  // when someone clicks hold
+  // when player1 clicks hold
   $('#hold1').click(function (event) {
     event.preventDefault();
     gameOne.hold(player1, player2);
@@ -127,7 +154,10 @@ $(document).ready(function () {
     $('#currentTotal1').text('');
     $('#roll1').prop('disabled', true);
     $('#roll2').removeAttr('disabled');
+    updateRoundNumber(gameOne);
+    updateCurrentPlayer(gameOne);
   });
+  // when player2 clicks hold
   $('#hold2').click(function (event) {
     event.preventDefault();
     gameOne.hold(player2, player1);
@@ -135,8 +165,19 @@ $(document).ready(function () {
     $('#currentTotal2').text('');
     $('#roll2').prop('disabled', true);
     $('#roll1').removeAttr('disabled');
+    updateRoundNumber(gameOne);
+    updateCurrentPlayer(gameOne);
   });
 });
+
+function updateRoundNumber(gameObj) {
+  let roundNumber = Math.round(gameObj.turnNumber / 2);
+  $('#currentRoundNumber').text(roundNumber);
+}
+
+function updateCurrentPlayer(gameObj) {
+  $('#currentPlayer').text(gameObj.getActivePlayer().name);
+}
 
 /*
 

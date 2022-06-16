@@ -51,16 +51,29 @@ Test1: "Roll a number for playerObj"
 Code: roll(playerObj)
 Expected Output: 
 
-Description for 
+Description for Game.prototype.hold()
+
+Test1: "Switch from current player to next player"
+Code: gameObj.hold(player2, player1);
+Expected Output: Becomes next player's turn
+gameObj {
+  turnNumber: x,
+  maxTurnNumber: y,
+  allPlayers: [],
+  activePlayer: player1
+}
+
+
+Description for Game.prototype.addPlayer()
 
 Test1: 
-Code: 
+Code: addPlayer(playerObj)
 Expected Output: 
 
-Description for 
+Description for Game.prototype.endOfGame()
 
 Test1: 
-Code: 
+Code: endOfGame(currentTurn)
 Expected Output: 
 
 ```
