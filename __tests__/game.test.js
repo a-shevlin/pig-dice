@@ -18,6 +18,14 @@ describe('Game', () => {
     reusableGame.addPlayer(player);
     expect(reusableGame.allPlayers[0]).toEqual(player);
   });
+
+  test('should return first player as active player', () => {
+    const player01 = new Player('Jonathan', 0);
+    const player02 = new Player('Garrett', 0);
+    reusableGame.addPlayer(player01);
+    reusableGame.addPlayer(player02);
+    expect(reusableGame.getActivePlayer()).toEqual(player01);
+  });
 });
 
 /*
