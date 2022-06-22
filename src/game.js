@@ -29,7 +29,7 @@ Game.prototype.roll = function (die, rollingPlayer) {
     // compare currentPlayer's name with rollingPlayer's name to see if it's rollingPlayer's turn
     if (currentPlayer.name === rollingPlayer.name) {
       // roll for currentPlayer
-      currentPlayer.eachRoll(die);
+      const rolledNumber = currentPlayer.eachRoll(die);
       // check if currentPlayer just rolled 1
       if (currentPlayer.currentTotal.length === 0) {
         // get the nextPlayer's index in our game
@@ -45,7 +45,10 @@ Game.prototype.roll = function (die, rollingPlayer) {
         } else {
           // round is over and we set the next player to first player in allPlayers
           currentGame.hold(allPlayers[playerIndex], allPlayers[0]);
+          return false;
         }
+      } else {
+        return rolledNumber;
       }
     } else {
       // if someone tries to roll outside their turn

@@ -22,6 +22,7 @@ Player.prototype.eachRoll = function (die) {
     console.log('Oh no you rolled 1 :(');
     this.clearCurrentTotal();
   }
+  return number;
 };
 
 Player.prototype.clearCurrentTotal = function () {

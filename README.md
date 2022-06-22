@@ -31,7 +31,7 @@ This is a website that allows two players to play pig dice game. The website ind
 
 * _dice overlap onto roll button if too many_
 
-## Test 
+## Test
 
 ```
 Description for Die()
