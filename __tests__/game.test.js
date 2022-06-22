@@ -1,5 +1,6 @@
 import Game from './../src/game.js';
 import Player from './../src/player.js';
+import Die from './../src/die.js';
 
 describe('Game', () => {
   let reusableGame;
@@ -25,6 +26,18 @@ describe('Game', () => {
     reusableGame.addPlayer(player01);
     reusableGame.addPlayer(player02);
     expect(reusableGame.getActivePlayer()).toEqual(player01);
+  });
+
+  test('increments turn and adds currently rolled numbers to total points of the current active player and changes current active player to 2nd argument', () => {
+    const player01 = new Player('Jonathan', 0);
+    const player02 = new Player('Garrett', 0);
+    player01.currentTotal = [2, 4, 2];
+    reusableGame.addPlayer(player01);
+    reusableGame.addPlayer(player02);
+    reusableGame.hold(player01, player02);
+    expect(reusableGame.getActivePlayer()).toEqual(player02);
+    expect(player01.totalPoints).toEqual(8);
+    expect(reusableGame.turnNumber).toEqual(2);
   });
 });
 
