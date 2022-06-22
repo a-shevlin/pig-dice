@@ -1,6 +1,6 @@
 # Pig Dice
 
-#### By Alex Shevlin, Claire Thorington, Seung Lee
+#### By Alex Shevlin, Claire Thorington, Seung Lee, Garrett Hays, Jonathan Lu
 
 #### A website where you can play a pig dice game with another person
 
